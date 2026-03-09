@@ -268,6 +268,19 @@
 
     .sns-card:hover { border-color: #aaa; }
 
+    .sns-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .sns-card-link:hover {
+      border-color: #aaa;
+      transform: translateY(-3px);
+      transition: transform 0.2s;
+    }
+
     .sns-icon { font-size: 1.4rem; margin-bottom: 10px; }
 
     .sns-name {
@@ -595,7 +608,7 @@
     <p class="section-label">Connect</p>
     <div class="sns-grid">
 
-      <div class="sns-card">
+      <a href="https://lin.ee/WToSn6b" target="_blank" rel="noopener" class="sns-card sns-card-link">
         <div class="sns-icon">💬</div>
         <p class="sns-name">LINE 公式</p>
         <div class="qr-wrap">
@@ -604,10 +617,10 @@
             alt="LINE 公式 QRコード"
           />
         </div>
-        <a href="https://lin.ee/WToSn6b" class="sns-link" target="_blank" rel="noopener">lin.ee/WToSn6b</a>
-      </div>
+        <span class="sns-link">lin.ee/WToSn6b</span>
+      </a>
 
-      <div class="sns-card">
+      <a href="https://note.com/3_happyfulllife" target="_blank" rel="noopener" class="sns-card sns-card-link">
         <div class="sns-icon">📝</div>
         <p class="sns-name">note</p>
         <div class="qr-wrap">
@@ -616,8 +629,8 @@
             alt="note QRコード"
           />
         </div>
-        <a href="https://note.com/3_happyfulllife" class="sns-link" target="_blank" rel="noopener">note.com/3_happyfulllife</a>
-      </div>
+        <span class="sns-link">note.com/3_happyfulllife</span>
+      </a>
 
     </div>
   </section>
