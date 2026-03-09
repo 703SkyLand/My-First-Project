@@ -415,6 +415,67 @@
       letter-spacing: 0.05em;
     }
 
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-inner {
+      position: relative;
+      max-width: 560px;
+      width: 100%;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-inner img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .private-card.clickable {
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .private-card.clickable:hover {
+      border-color: #aaa;
+      transform: translateY(-3px);
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -548,7 +609,7 @@
       </div>
 
       <!-- 家族 -->
-      <div class="private-card">
+      <div class="private-card clickable" onclick="openModal('modal-family')"
         <div class="private-card-header">
           <span class="private-card-icon">🏡</span>
           <span class="private-card-title">Family</span>
@@ -635,7 +696,34 @@
     </div>
   </section>
 
+  <!-- モーダル：家族 -->
+  <div class="modal-overlay" id="modal-family" onclick="closeModal('modal-family')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-family')">✕</button>
+      <img src="photo-family.jpg" alt="家族の愛猫" />
+    </div>
+  </div>
+
   <footer>© SkyLand Inc. All rights reserved.</footer>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(function(m) {
+          m.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
