@@ -118,112 +118,79 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .tl-phase-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-      margin-top: 52px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    /* ── TIMELINE ── */
+    .story-line {
+      position: relative;
+      padding-left: 28px;
     }
-    .tl-phase-label:first-child { margin-top: 0; }
-    .tl-phase-label::before,
-    .tl-phase-label::after {
+
+    .story-line::before {
       content: '';
-      flex: 1;
-      height: 1px;
+      position: absolute;
+      left: 5px;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
       background: var(--border);
     }
 
-    .tl-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
+    .story-step {
+      position: relative;
+      padding-bottom: 40px;
     }
 
-    @media (max-width: 560px) {
-      .tl-grid { grid-template-columns: 1fr; }
+    .story-step:last-child { padding-bottom: 0; }
+
+    .story-step::before {
+      content: '';
+      position: absolute;
+      left: -23px;
+      top: 7px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid #bbb;
     }
 
-    .tl-grid.single { grid-template-columns: 1fr; }
-
-    .tl-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px 22px;
-      opacity: 0;
-      transform: translateY(14px);
-      animation: fadeUp 0.5s ease forwards;
-    }
-
-    .tl-card:nth-child(1) { animation-delay: 0.05s; }
-    .tl-card:nth-child(2) { animation-delay: 0.15s; }
-
-    .tl-card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .tl-card-age {
+    .story-phase {
       font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      color: var(--muted);
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      color: var(--muted);
+      margin-bottom: 5px;
     }
 
-    .tl-card-title {
-      font-size: 0.88rem;
+    .story-title {
+      font-size: 0.9rem;
       font-weight: 700;
       color: #1a1a1a;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       letter-spacing: 0.02em;
     }
 
-    .tl-card-text {
+    .story-text {
       font-size: 0.78rem;
       color: #666;
       line-height: 1.85;
     }
 
-    .tl-card-text strong { color: #333; font-weight: 700; }
-
-    .tl-card-badge {
-      display: inline-block;
+    .story-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
       margin-top: 10px;
-      font-size: 0.68rem;
+    }
+
+    .story-tag {
+      font-size: 0.67rem;
       color: #555;
       background: var(--border);
       border-radius: 20px;
-      padding: 3px 10px;
-      letter-spacing: 0.03em;
+      padding: 3px 11px;
+      letter-spacing: 0.02em;
     }
-
-    /* ゴールカード */
-    .tl-card.goal {
-      border-color: #c8c8c0;
-      background: #fff;
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .tl-card.goal .tl-card-icon {
-      font-size: 2rem;
-      margin-bottom: 0;
-      flex-shrink: 0;
-    }
-
-    .tl-card.goal .tl-card-title { font-size: 0.95rem; }
 
     /* ── NOW CARD ── */
     .now-card {
@@ -491,77 +458,44 @@
   <section class="section">
     <p class="section-label">Timeline</p>
 
-    <!-- Phase 1: 原点 -->
-    <p class="tl-phase-label">原点</p>
-    <div class="tl-grid">
-      <div class="tl-card">
-        <span class="tl-card-icon">🌿</span>
-        <p class="tl-card-age">1977 — 誕生</p>
-        <p class="tl-card-title">自然の中で育つ</p>
-        <p class="tl-card-text">大分県日田市生まれ。<br>お米・野菜・果物・卵・鶏肉など、<strong>ほぼ自給自足</strong>の自然豊かな環境で育つ。</p>
-      </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">🏫</span>
-        <p class="tl-card-age">23歳 — 起業</p>
-        <p class="tl-card-title">学習塾を起業</p>
-        <p class="tl-card-text">小学校教員を目指し教員免許を取得。<br><strong>自分の理想の教育</strong>を追い求め、教壇ではなく起業の道へ。</p>
-      </div>
-    </div>
+    <div class="story-line">
 
-    <!-- Phase 2: 多様な経験 -->
-    <p class="tl-phase-label">多様な経験を積む</p>
-    <div class="tl-grid">
-      <div class="tl-card">
-        <span class="tl-card-icon">👘</span>
-        <p class="tl-card-age">30歳 — ダブルワーク</p>
-        <p class="tl-card-title">着付け講師へ</p>
-        <p class="tl-card-text">亡き義母から譲り受けた着物をきっかけに<strong>着付け講師</strong>を開始。学習塾とのダブルワークへ。</p>
+      <div class="story-step">
+        <p class="story-phase">原点</p>
+        <p class="story-title">生まれ・誕生</p>
+        <p class="story-text">大分県日田市生まれ。お米・野菜・果物・卵・鶏肉など、ほぼ自給自足の自然豊かな環境で育つ。</p>
       </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">✕4</span>
-        <p class="tl-card-age">37歳 — フォーワーカー</p>
-        <p class="tl-card-title">4つの仕事を掛け持ち</p>
-        <p class="tl-card-text">早朝コンビニ・広告代理店の営業が加わり、<strong>合計4つの仕事</strong>を同時に経験。</p>
-        <span class="tl-card-badge">学習塾 / 着付け / コンビニ / 広告営業</span>
-      </div>
-    </div>
 
-    <!-- Phase 3: 飛躍 -->
-    <p class="tl-phase-label">飛躍</p>
-    <div class="tl-grid">
-      <div class="tl-card">
-        <span class="tl-card-icon">🌍</span>
-        <p class="tl-card-age">38歳 — 転職・世界へ</p>
-        <p class="tl-card-title">生命保険 × 世界の舞台へ</p>
-        <p class="tl-card-text">入院をきっかけに転職。<strong>初年度MVP入賞・MDRT入会</strong>を達成。ロサンゼルスの世界大会でスピーチ。</p>
-        <span class="tl-card-badge">MVP &nbsp;·&nbsp; MDRT &nbsp;·&nbsp; LA スピーチ</span>
-      </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">🎤</span>
-        <p class="tl-card-age">42歳 — 全国講演会</p>
-        <p class="tl-card-title">47都道府県 620名</p>
-        <p class="tl-card-text">「<strong>世界一幸せな仕事人になる</strong>」をテーマに全国講演会を達成。<strong>1年7ヶ月で620名</strong>が参加。</p>
-        <span class="tl-card-badge">47都道府県 達成</span>
-      </div>
-    </div>
-
-    <!-- Phase 4: 現在 -->
-    <p class="tl-phase-label">現在</p>
-    <div class="tl-grid">
-      <div class="tl-card">
-        <span class="tl-card-icon">🤝</span>
-        <p class="tl-card-age">45歳 — 転換</p>
-        <p class="tl-card-title">生き方コンサルタントへ</p>
-        <p class="tl-card-text">講演家を辞め、目の前の受講生ひとりひとりに<strong>心を込めて寄り添う</strong>道を選ぶ。</p>
-      </div>
-      <div class="tl-card goal">
-        <span class="tl-card-icon">🏢</span>
-        <div>
-          <p class="tl-card-age">2022年9月30日 — 法人設立</p>
-          <p class="tl-card-title">株式会社 SkyLand 設立</p>
-          <p class="tl-card-text">「生きるを愛する」をテーマに、<strong>株式会社 SkyLand</strong> を設立。</p>
+      <div class="story-step">
+        <p class="story-phase">多様な経験を積む</p>
+        <p class="story-title">フォーワーカー</p>
+        <p class="story-text">4つの仕事を掛け持ちしながら、幅広い経験を積む。</p>
+        <div class="story-tags">
+          <span class="story-tag">学習塾</span>
+          <span class="story-tag">着付け講師</span>
+          <span class="story-tag">コンビニ</span>
+          <span class="story-tag">広告代理店営業</span>
         </div>
       </div>
+
+      <div class="story-step">
+        <p class="story-phase">飛躍</p>
+        <p class="story-title">転職</p>
+        <p class="story-text">入院をきっかけに転職。生命保険の世界へ飛び込み、初年度MVP入賞・MDRT入会を達成。ロサンゼルスの世界大会でスピーチ。</p>
+      </div>
+
+      <div class="story-step">
+        <p class="story-phase">起業</p>
+        <p class="story-title">株式会社 SkyLand 設立</p>
+        <p class="story-text">「生きるを、愛する。」をテーマに、2022年9月30日 株式会社 SkyLand を設立。</p>
+      </div>
+
+      <div class="story-step">
+        <p class="story-phase">現在</p>
+        <p class="story-title">生き方コンサルタント</p>
+        <p class="story-text">関わる人ひとりひとりに愛をもって寄り添い、「世界一幸せ」と感じられる生き方をサポートしています。</p>
+      </div>
+
     </div>
 
   </section>
