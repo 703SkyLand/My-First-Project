@@ -719,12 +719,18 @@
   <footer>© SkyLand Inc. All rights reserved.</footer>
 
   <script>
+    const timers = new WeakMap();
+
     const observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         const inner = entry.target.querySelector('.flip-card-inner');
         if (entry.isIntersecting) {
-          inner.classList.add('flipped');
+          const t = setTimeout(function() {
+            inner.classList.add('flipped');
+          }, 2500);
+          timers.set(entry.target, t);
         } else {
+          clearTimeout(timers.get(entry.target));
           inner.classList.remove('flipped');
         }
       });
