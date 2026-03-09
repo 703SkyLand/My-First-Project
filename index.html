@@ -308,11 +308,27 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .private-grid .flip-card {
       min-height: 180px;
+    }
+
+    @media (min-width: 561px) {
+      .private-grid {
+        grid-auto-rows: 1fr;
+      }
+      .flip-card-inner {
+        height: 100%;
+      }
+      .flip-card-front {
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .flip-card-back {
+        height: 100%;
+      }
     }
 
     @media (max-width: 560px) {
