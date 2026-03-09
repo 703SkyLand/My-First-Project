@@ -721,7 +721,8 @@
   <script>
     const timers = new WeakMap();
 
-    const observer = new IntersectionObserver(function(entries) {
+    // カードが中央に来たら2.5秒後に写真へフェード
+    const enterObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         const inner = entry.target.querySelector('.flip-card-inner');
         if (entry.isIntersecting) {
@@ -731,7 +732,6 @@
           timers.set(entry.target, t);
         } else {
           clearTimeout(timers.get(entry.target));
-          inner.classList.remove('flipped');
         }
       });
     }, {
@@ -739,8 +739,22 @@
       rootMargin: '-10% 0px -10% 0px'
     });
 
+    // カードがほぼ画面外に出たらテキストに戻す
+    const exitObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) {
+          const inner = entry.target.querySelector('.flip-card-inner');
+          clearTimeout(timers.get(entry.target));
+          inner.classList.remove('flipped');
+        }
+      });
+    }, {
+      threshold: 0.05
+    });
+
     document.querySelectorAll('.flip-card').forEach(function(card) {
-      observer.observe(card);
+      enterObserver.observe(card);
+      exitObserver.observe(card);
     });
   </script>
 
