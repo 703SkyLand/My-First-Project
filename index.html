@@ -321,6 +321,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
+      align-items: start;
+    }
+
+    .private-grid .flip-card {
+      min-height: 180px;
     }
 
     @media (max-width: 560px) {
@@ -415,65 +420,52 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+    /* ── FLIP CARD ── */
+    .flip-card {
+      perspective: 1000px;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-inner {
+    .flip-card-inner {
       position: relative;
-      max-width: 560px;
       width: 100%;
-      animation: modalIn 0.3s ease;
+      height: 100%;
+      min-height: 180px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.92); }
-      to   { opacity: 1; transform: scale(1); }
+    .flip-card-inner.flipped {
+      transform: rotateY(180deg);
     }
 
-    .modal-inner img {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-    }
-
-    .modal-close {
+    .flip-card-front,
+    .flip-card-back {
       position: absolute;
-      top: -14px;
-      right: -14px;
-      width: 32px;
-      height: 32px;
-      background: #fff;
-      border: none;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    .private-card.clickable {
-      cursor: pointer;
-      transition: border-color 0.25s, transform 0.25s;
+    .flip-card-front {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      height: 100%;
     }
 
-    .private-card.clickable:hover {
-      border-color: #aaa;
-      transform: translateY(-3px);
+    .flip-card-back {
+      background: #000;
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.92;
     }
 
     /* ── FOOTER ── */
@@ -609,56 +601,84 @@
       </div>
 
       <!-- 家族 -->
-      <div class="private-card clickable" onclick="openModal('modal-family')"
-        <div class="private-card-header">
-          <span class="private-card-icon">🏡</span>
-          <span class="private-card-title">Family</span>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="private-card-header">
+              <span class="private-card-icon">🏡</span>
+              <span class="private-card-title">Family</span>
+            </div>
+            <ul class="private-list">
+              <li><strong>23歳の娘</strong></li>
+              <li><strong>20歳の息子</strong></li>
+              <li>愛猫 <strong>9歳</strong></li>
+            </ul>
+          </div>
+          <div class="flip-card-back">
+            <img src="photo-family.jpg" alt="家族の愛猫" />
+          </div>
         </div>
-        <ul class="private-list">
-          <li><strong>23歳の娘</strong></li>
-          <li><strong>20歳の息子</strong></li>
-          <li>愛猫 <strong>9歳</strong></li>
-        </ul>
       </div>
 
       <!-- 好きなこと -->
-      <div class="private-card clickable" onclick="openModal('modal-love')"
-        <div class="private-card-header">
-          <span class="private-card-icon">✨</span>
-          <span class="private-card-title">Love</span>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="private-card-header">
+              <span class="private-card-icon">✨</span>
+              <span class="private-card-title">Love</span>
+            </div>
+            <ul class="private-list">
+              <li>📷 写真を撮ること</li>
+              <li>🗾 国内旅行</li>
+              <li>🛋 インテリアショップ巡り</li>
+              <li>👗 ファッション</li>
+            </ul>
+          </div>
+          <div class="flip-card-back">
+            <img src="photo-love.jpg" alt="好きな旅の風景" />
+          </div>
         </div>
-        <ul class="private-list">
-          <li>📷 写真を撮ること</li>
-          <li>🗾 国内旅行</li>
-          <li>🛋 インテリアショップ巡り</li>
-          <li>👗 ファッション</li>
-        </ul>
       </div>
 
       <!-- 毎日の習慣 -->
-      <div class="private-card clickable" onclick="openModal('modal-habits')"
-        <div class="private-card-header">
-          <span class="private-card-icon">🌅</span>
-          <span class="private-card-title">Daily Habits</span>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="private-card-header">
+              <span class="private-card-icon">🌅</span>
+              <span class="private-card-title">Daily Habits</span>
+            </div>
+            <ul class="private-list">
+              <li>🕔 <strong>5時起き</strong></li>
+              <li>🧹 掃除</li>
+              <li>🚶 ウォーキング</li>
+            </ul>
+          </div>
+          <div class="flip-card-back">
+            <img src="photo-habits.jpg" alt="日常の風景" />
+          </div>
         </div>
-        <ul class="private-list">
-          <li>🕔 <strong>5時起き</strong></li>
-          <li>🧹 掃除</li>
-          <li>🚶 ウォーキング</li>
-        </ul>
       </div>
 
       <!-- やらないこと -->
-      <div class="private-card clickable" onclick="openModal('modal-wontdo')"
-        <div class="private-card-header">
-          <span class="private-card-icon">🚫</span>
-          <span class="private-card-title">Won't Do</span>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="private-card-header">
+              <span class="private-card-icon">🚫</span>
+              <span class="private-card-title">Won't Do</span>
+            </div>
+            <ul class="private-list">
+              <li>SNS</li>
+              <li>違和感を感じること</li>
+              <li>自分に嘘をつくこと</li>
+            </ul>
+          </div>
+          <div class="flip-card-back">
+            <img src="photo-wontdo.jpg" alt="自分を大切にする時間" />
+          </div>
         </div>
-        <ul class="private-list">
-          <li>SNS</li>
-          <li>違和感を感じること</li>
-          <li>自分に嘘をつくこと</li>
-        </ul>
       </div>
 
     </div>
@@ -696,56 +716,25 @@
     </div>
   </section>
 
-  <!-- モーダル：やらないこと -->
-  <div class="modal-overlay" id="modal-wontdo" onclick="closeModal('modal-wontdo')">
-    <div class="modal-inner" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal('modal-wontdo')">✕</button>
-      <img src="photo-wontdo.jpg" alt="自分を大切にする時間" />
-    </div>
-  </div>
-
-  <!-- モーダル：毎日の習慣 -->
-  <div class="modal-overlay" id="modal-habits" onclick="closeModal('modal-habits')">
-    <div class="modal-inner" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal('modal-habits')">✕</button>
-      <img src="photo-habits.jpg" alt="日常の風景" />
-    </div>
-  </div>
-
-  <!-- モーダル：好きなこと -->
-  <div class="modal-overlay" id="modal-love" onclick="closeModal('modal-love')">
-    <div class="modal-inner" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal('modal-love')">✕</button>
-      <img src="photo-love.jpg" alt="好きな旅の風景" />
-    </div>
-  </div>
-
-  <!-- モーダル：家族 -->
-  <div class="modal-overlay" id="modal-family" onclick="closeModal('modal-family')">
-    <div class="modal-inner" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal('modal-family')">✕</button>
-      <img src="photo-family.jpg" alt="家族の愛猫" />
-    </div>
-  </div>
-
   <footer>© SkyLand Inc. All rights reserved.</footer>
 
   <script>
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-overlay.active').forEach(function(m) {
-          m.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-      }
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        const inner = entry.target.querySelector('.flip-card-inner');
+        if (entry.isIntersecting) {
+          inner.classList.add('flipped');
+        } else {
+          inner.classList.remove('flipped');
+        }
+      });
+    }, {
+      threshold: 0.55,
+      rootMargin: '-10% 0px -10% 0px'
+    });
+
+    document.querySelectorAll('.flip-card').forEach(function(card) {
+      observer.observe(card);
     });
   </script>
 
