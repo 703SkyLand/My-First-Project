@@ -48,45 +48,44 @@
       font-size: 0.72rem;
       font-weight: 300;
       letter-spacing: 0.35em;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-
-    .hero-brand {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-      font-weight: 700;
-      letter-spacing: 0.45em;
-      color: #1a1a1a;
-      margin-bottom: 4px;
-    }
-
-    .hero-brand-sub {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: clamp(0.75rem, 2vw, 0.88rem);
-      font-weight: 300;
-      letter-spacing: 0.3em;
       color: #555;
-      margin-bottom: 64px;
-    }
-
-    .hero-name {
-      font-family: 'Ephesis', cursive;
-      font-size: clamp(3.8rem, 15vw, 9rem);
-      font-weight: 400;
-      color: #3a3a3a;
-      line-height: 1.0;
-      margin-bottom: 32px;
-      letter-spacing: 0.03em;
+      margin-bottom: 14px;
+      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
     }
 
     .hero-person {
       font-family: 'Noto Sans JP', sans-serif;
-      font-size: 1rem;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
       font-weight: 400;
       letter-spacing: 0.45em;
       color: #2a2a2a;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
+    }
+
+    .hero-brand-sub {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(0.72rem, 2vw, 0.85rem);
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #555;
+      margin-bottom: 0;
+      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
+    }
+
+    .hero-spacer {
+      flex: 1;
+    }
+
+    .hero-name {
+      font-family: 'Ephesis', cursive;
+      font-size: clamp(3rem, 12vw, 7rem);
+      font-weight: 400;
+      color: #3a3a3a;
+      line-height: 1.0;
+      margin-bottom: 40px;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 4px rgba(255,255,255,0.4);
     }
 
     .hero-divider {
@@ -460,7 +459,11 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-divider"></div>
+    <p class="hero-category">生き方コンサルタント</p>
+    <p class="hero-person">財津 直美</p>
+    <p class="hero-brand-sub">生きるを、愛する。</p>
+    <div class="hero-spacer"></div>
+    <p class="hero-name">SkyLand.inc</p>
   </section>
 
   <!-- TIMELINE -->
