@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- saved from url=(0061)file:///Users/zaitsunaomi/Desktop/My-First-Project/index.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyLand — Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Noto+Sans+JP:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="./SkyLand — Profile6_files/css2" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -33,12 +33,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       text-align: center;
-      padding: 120px 24px 80px;
+      padding: 100px 24px 80px;
       gap: 0;
       position: relative;
       background: url('hero.png') center center / cover no-repeat;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.42);
     }
 
     .hero > * { position: relative; z-index: 1; }
@@ -67,7 +74,7 @@
       font-weight: 300;
       letter-spacing: 0.3em;
       color: #555;
-      margin-bottom: 64px;
+      margin-bottom: 36px;
     }
 
     .hero-name {
@@ -82,11 +89,11 @@
 
     .hero-person {
       font-family: 'Noto Sans JP', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 0.45em;
-      color: #2a2a2a;
-      margin-bottom: 16px;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 64px;
     }
 
     .hero-divider {
@@ -303,105 +310,6 @@
 
     .sns-link:hover { color: #1a1a1a; }
 
-    /* ── PRIVATE ── */
-    .private-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 560px) {
-      .private-grid { grid-template-columns: 1fr; }
-    }
-
-    .private-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px 22px;
-    }
-
-    .private-card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .private-card-icon { font-size: 1.2rem; }
-
-    .private-card-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .private-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .private-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      font-size: 0.83rem;
-      color: #444;
-      line-height: 1.6;
-    }
-
-    .private-list li::before {
-      content: '';
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--line);
-      flex-shrink: 0;
-      margin-top: 6px;
-    }
-
-    .private-list li strong { color: #1a1a1a; font-weight: 700; }
-
-    .private-card.values {
-      grid-column: 1 / -1;
-      background: #fff;
-      border-color: #d8d8d4;
-      display: flex;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .value-item {
-      flex: 1;
-      text-align: center;
-      padding: 8px 12px;
-    }
-
-    .value-item + .value-item {
-      border-left: 1px solid var(--border);
-    }
-
-    .value-item-emoji { font-size: 1.6rem; margin-bottom: 8px; }
-
-    .value-item-text {
-      font-size: 0.82rem;
-      color: #333;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      line-height: 1.6;
-    }
-
-    .value-item-sub {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 4px;
-      letter-spacing: 0.05em;
-    }
-
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -418,6 +326,9 @@
 
   <!-- HERO -->
   <section class="hero">
+    <p class="hero-category">生き方コンサルタント</p>
+    <p class="hero-brand-sub">生きるを、愛する。</p>
+    <p class="hero-person">財津 直美</p>
     <div class="hero-divider"></div>
   </section>
 
@@ -515,81 +426,6 @@
     </div>
   </section>
 
-  <!-- PRIVATE -->
-  <section class="section">
-    <p class="section-label">Private</p>
-    <div class="private-grid">
-
-      <!-- 大切にしている価値観（全幅） -->
-      <div class="private-card values">
-        <div class="value-item">
-          <div class="value-item-emoji">🤍</div>
-          <div class="value-item-text">自分を愛する</div>
-          <div class="value-item-sub">Love yourself</div>
-        </div>
-        <div class="value-item">
-          <div class="value-item-emoji">🌸</div>
-          <div class="value-item-text">生きるを愛する</div>
-          <div class="value-item-sub">Love your life</div>
-        </div>
-      </div>
-
-      <!-- 家族 -->
-      <div class="private-card">
-        <div class="private-card-header">
-          <span class="private-card-icon">🏡</span>
-          <span class="private-card-title">Family</span>
-        </div>
-        <ul class="private-list">
-          <li><strong>23歳の娘</strong></li>
-          <li><strong>20歳の息子</strong></li>
-          <li>愛猫 <strong>9歳</strong></li>
-        </ul>
-      </div>
-
-      <!-- 好きなこと -->
-      <div class="private-card">
-        <div class="private-card-header">
-          <span class="private-card-icon">✨</span>
-          <span class="private-card-title">Love</span>
-        </div>
-        <ul class="private-list">
-          <li>📷 写真を撮ること</li>
-          <li>🗾 国内旅行</li>
-          <li>🛋 インテリアショップ巡り</li>
-          <li>👗 ファッション</li>
-        </ul>
-      </div>
-
-      <!-- 毎日の習慣 -->
-      <div class="private-card">
-        <div class="private-card-header">
-          <span class="private-card-icon">🌅</span>
-          <span class="private-card-title">Daily Habits</span>
-        </div>
-        <ul class="private-list">
-          <li>🕔 <strong>5時起き</strong></li>
-          <li>🧹 掃除</li>
-          <li>🚶 ウォーキング</li>
-        </ul>
-      </div>
-
-      <!-- やらないこと -->
-      <div class="private-card">
-        <div class="private-card-header">
-          <span class="private-card-icon">🚫</span>
-          <span class="private-card-title">Won't Do</span>
-        </div>
-        <ul class="private-list">
-          <li>SNS</li>
-          <li>違和感を感じること</li>
-          <li>自分に嘘をつくこと</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
   <!-- SNS / QR -->
   <section class="section">
     <p class="section-label">Connect</p>
@@ -599,10 +435,7 @@
         <div class="sns-icon">💬</div>
         <p class="sns-name">LINE 公式</p>
         <div class="qr-wrap">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Flin.ee%2FWToSn6b&size=136x136&margin=4&color=1a1a1a&bgcolor=ffffff"
-            alt="LINE 公式 QRコード"
-          />
+          <img src="./SkyLand — Profile6_files/saved_resource" alt="LINE 公式 QRコード">
         </div>
         <a href="https://lin.ee/WToSn6b" class="sns-link" target="_blank" rel="noopener">lin.ee/WToSn6b</a>
       </div>
@@ -611,10 +444,7 @@
         <div class="sns-icon">📝</div>
         <p class="sns-name">note</p>
         <div class="qr-wrap">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fnote.com%2F3_happyfulllife&size=136x136&margin=4&color=1a1a1a&bgcolor=ffffff"
-            alt="note QRコード"
-          />
+          <img src="./SkyLand — Profile6_files/saved_resource(1)" alt="note QRコード">
         </div>
         <a href="https://note.com/3_happyfulllife" class="sns-link" target="_blank" rel="noopener">note.com/3_happyfulllife</a>
       </div>
@@ -624,5 +454,6 @@
 
   <footer>© 2024 SkyLand. All rights reserved.</footer>
 
-</body>
-</html>
+
+
+</body></html>
