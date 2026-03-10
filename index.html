@@ -172,10 +172,37 @@
       opacity: 0;
       transform: translateY(14px);
       animation: fadeUp 0.5s ease forwards;
+      position: relative;
     }
 
     .tl-card:nth-child(1) { animation-delay: 0.05s; }
     .tl-card:nth-child(2) { animation-delay: 0.15s; }
+
+    .tl-card.has-photo {
+      cursor: pointer;
+    }
+
+    .tl-card.has-photo:hover {
+      border-color: #aaa;
+    }
+
+    @keyframes tapBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      40%       { transform: translateY(-7px) scale(1.12); }
+      65%       { transform: translateY(-3px) scale(1.05); }
+    }
+
+    .tap-finger {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      animation: tapBounce 1.6s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.85;
+    }
 
     .tl-card-icon {
       font-size: 1.5rem;
@@ -480,6 +507,50 @@
       opacity: 1;
     }
 
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-inner {
+      position: relative;
+      max-width: 560px;
+      width: 100%;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .modal-inner img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -509,73 +580,81 @@
     <!-- 原点 -->
     <p class="tl-phase-label">🌱</p>
     <div class="tl-grid single">
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-birth')">
         <span class="tl-card-icon">🌿</span>
         <p class="tl-card-age">1977年4月23日</p>
         <p class="tl-card-title">誕生</p>
         <p class="tl-card-text">大分県日田市出身。お米・野菜・果物・卵・鶏肉など、ほぼ自給自足の自然豊かな環境で育つ。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
     </div>
 
     <!-- 多様な経験を積む -->
     <p class="tl-phase-label">✖️4</p>
     <div class="tl-grid">
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-juku')">
         <span class="tl-card-icon">🏫</span>
         <p class="tl-card-age">23歳</p>
         <p class="tl-card-title">学習塾</p>
         <p class="tl-card-text">小学校教員を目指し教員免許を取得。自分の理想の教育を追い求め、起業の道へ。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-kimono')">
         <span class="tl-card-icon">👘</span>
         <p class="tl-card-age">30歳</p>
         <p class="tl-card-title">着付け講師</p>
         <p class="tl-card-text">亡き義母から譲り受けた着物をきっかけに着付け講師を開始。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-conv')">
         <span class="tl-card-icon">🏪</span>
         <p class="tl-card-age">37歳</p>
         <p class="tl-card-title">コンビニ</p>
         <p class="tl-card-text">早朝からコンビニスタッフとして勤務。幅広い現場経験を積む。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-ad')">
         <span class="tl-card-icon">📢</span>
         <p class="tl-card-age">37歳</p>
         <p class="tl-card-title">広告代理店営業</p>
         <p class="tl-card-text">広告代理店の営業として活動。合計4つの仕事を同時に経験するフォーワーカーへ。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
     </div>
 
     <!-- 転機 -->
     <p class="tl-phase-label">💫</p>
     <div class="tl-grid single">
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-tenki')">
         <span class="tl-card-icon">🔄</span>
         <p class="tl-card-age">38歳</p>
         <p class="tl-card-title">生命保険会社へ</p>
         <p class="tl-card-text">入院をきっかけに転職。生命保険の世界へ飛び込み、初年度MVP入賞・MDRT入会を達成。ロサンゼルスの世界大会でスピーチ。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
     </div>
 
     <!-- 起業 -->
     <p class="tl-phase-label">🚀</p>
     <div class="tl-grid single">
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-kigyou')">
         <span class="tl-card-icon">🏢</span>
         <p class="tl-card-age">2022年9月30日</p>
         <p class="tl-card-title">株式会社 SkyLand 設立</p>
         <p class="tl-card-text">「生きるを、愛する。」をテーマに、2022年9月30日 株式会社 SkyLand を設立。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
     </div>
 
     <!-- 現在 -->
     <p class="tl-phase-label">🌸</p>
     <div class="tl-grid single">
-      <div class="tl-card">
+      <div class="tl-card has-photo" onclick="openModal('modal-tl-now')">
         <span class="tl-card-icon">🤝</span>
         <p class="tl-card-age">現在</p>
         <p class="tl-card-title">生き方コンサルタント</p>
         <p class="tl-card-text">関わる人ひとりひとりに愛をもって寄り添い、「世界一幸せ」と感じられる生き方をサポートしています。</p>
+        <img class="tap-finger" src="tap-finger.png" alt="" />
       </div>
     </div>
 
@@ -726,9 +805,76 @@
     </div>
   </section>
 
+  <!-- タイムラインモーダル（写真は後で差し替え） -->
+  <div class="modal-overlay" id="modal-tl-birth" onclick="closeModal('modal-tl-birth')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-birth')">✕</button>
+      <img src="tap-finger.png" alt="誕生" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-juku" onclick="closeModal('modal-tl-juku')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-juku')">✕</button>
+      <img src="tap-finger.png" alt="学習塾" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-kimono" onclick="closeModal('modal-tl-kimono')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-kimono')">✕</button>
+      <img src="tap-finger.png" alt="着付け講師" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-conv" onclick="closeModal('modal-tl-conv')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-conv')">✕</button>
+      <img src="tap-finger.png" alt="コンビニ" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-ad" onclick="closeModal('modal-tl-ad')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-ad')">✕</button>
+      <img src="tap-finger.png" alt="広告代理店営業" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-tenki" onclick="closeModal('modal-tl-tenki')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-tenki')">✕</button>
+      <img src="tap-finger.png" alt="転機" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-kigyou" onclick="closeModal('modal-tl-kigyou')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-kigyou')">✕</button>
+      <img src="tap-finger.png" alt="起業" />
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-tl-now" onclick="closeModal('modal-tl-now')">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-tl-now')">✕</button>
+      <img src="tap-finger.png" alt="現在" />
+    </div>
+  </div>
+
   <footer>© SkyLand Inc. All rights reserved.</footer>
 
   <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(function(m) {
+          m.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+
     const timers = new WeakMap();
 
     // カードが中央に来たら2.5秒後に写真へフェード
