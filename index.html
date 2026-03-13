@@ -3,779 +3,220 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkyLand — Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Noto+Sans+JP:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>自己紹介図解 | Personal Profile</title>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #ffffff;
-      --surface: #f8f8f6;
-      --border: #e8e8e4;
-      --accent: #2c2c2c;
-      --muted: #999;
-      --line: #d4d4d0;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --accent: #1d4ed8;
     }
 
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      background: var(--bg);
-      color: var(--accent);
-      font-family: 'Noto Sans JP', 'Inter', sans-serif;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eef3ff 0%, #f5f7fb 240px, #f5f7fb 100%);
+      line-height: 1.7;
     }
 
-    /* ── HERO ── */
+    .container {
+      width: min(1080px, 92%);
+      margin: 0 auto;
+      padding: 36px 0 80px;
+    }
+
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      text-align: center;
-      padding: 72px 24px 80px;
-      gap: 0;
-      position: relative;
-      background: url('hero.png?v=4') center center / cover no-repeat;
-    }
-
-    .hero > * { position: relative; z-index: 1; }
-
-    .hero-category {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 300;
-      letter-spacing: 0.35em;
-      color: #555;
-      margin-bottom: 14px;
-      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
-    }
-
-    .hero-roman {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(0.65rem, 2vw, 0.82rem);
-      font-weight: 300;
-      color: #888;
-      letter-spacing: 0.28em;
-      margin-top: 4px;
-      margin-bottom: 12px;
-      text-shadow: 0 1px 3px rgba(255,255,255,0.5);
-    }
-
-    .hero-person {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: clamp(1.1rem, 4vw, 1.4rem);
-      font-weight: 400;
-      letter-spacing: 0.45em;
-      color: #2a2a2a;
-      margin-bottom: 14px;
-      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
-    }
-
-    .hero-brand-sub {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: clamp(0.88rem, 2.5vw, 1.1rem);
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #555;
-      margin-bottom: 0;
-      text-shadow: 0 1px 4px rgba(255,255,255,0.5);
-    }
-
-    .hero-spacer {
-      flex: 1;
-    }
-
-    .hero-name {
-      font-family: 'Ephesis', cursive;
-      font-size: clamp(3rem, 12vw, 7rem);
-      font-weight: 400;
-      color: #3a3a3a;
-      line-height: 1.0;
-      margin-bottom: 40px;
-      letter-spacing: 0.03em;
-      text-shadow: 0 1px 4px rgba(255,255,255,0.4);
-    }
-
-    .hero-divider {
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--line), transparent);
-      margin: 0 auto;
-    }
-
-
-    /* ── SECTION ── */
-    .section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 80px 32px;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      letter-spacing: 0.4em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 48px;
-    }
-
-    /* ── TIMELINE (図解) ── */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── TIMELINE ── */
-    .tl-phase-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-      margin-top: 52px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tl-phase-label:first-child { margin-top: 0; }
-    .tl-phase-label::before,
-    .tl-phase-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .tl-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    @media (max-width: 560px) {
-      .tl-grid { grid-template-columns: 1fr; }
-    }
-
-    .tl-grid.single { grid-template-columns: 1fr; }
-
-    .tl-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px 22px;
-      opacity: 0;
-      transform: translateY(14px);
-      animation: fadeUp 0.5s ease forwards;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 28px 26px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
     }
 
-    .tl-card:nth-child(1) { animation-delay: 0.05s; }
-    .tl-card:nth-child(2) { animation-delay: 0.15s; }
-
-    .tl-card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .tl-card-title {
-      font-size: 0.88rem;
+    .hero-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
       font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
     }
 
-    .tl-card-age {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
+    .hero-title {
+      margin: 0;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .hero-sub {
+      margin: 10px 0 0;
       color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 6px;
+      font-size: 0.95rem;
     }
 
-    .tl-card-text {
-      font-size: 0.78rem;
-      color: #666;
-      line-height: 1.85;
-    }
-
-    .tl-card-badge {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 0.68rem;
-      color: #555;
-      background: var(--border);
-      border-radius: 20px;
-      padding: 3px 10px;
-      letter-spacing: 0.03em;
-    }
-
-    /* ── NOW CARD ── */
-    .now-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px 32px;
-    }
-
-    .now-card h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 14px;
-      letter-spacing: 0.02em;
-    }
-
-    .now-card p {
-      font-size: 0.85rem;
-      color: #666;
-      line-height: 2.1;
-    }
-
-    .now-card p + p {
-      margin-top: 1.2em;
-    }
-
-    /* ── SNS ── */
-    .sns-grid {
+    .grid {
+      margin-top: 20px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 20px;
     }
 
-    @media (max-width: 500px) {
-      .sns-grid { grid-template-columns: 1fr; }
-    }
-
-    .sns-card {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px 24px;
-      text-align: center;
-      transition: border-color 0.25s;
-    }
-
-    .sns-card:hover { border-color: #aaa; }
-
-    .sns-card-link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-
-    .sns-card-link:hover {
-      border-color: #aaa;
-      transform: translateY(-3px);
-      transition: transform 0.2s;
-    }
-
-    .sns-icon { font-size: 1.4rem; margin-bottom: 10px; }
-
-    .sns-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .qr-wrap {
-      display: inline-block;
-      padding: 8px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-
-    .qr-wrap img { display: block; width: 136px; height: 136px; }
-
-    .sns-link {
-      display: block;
-      margin-top: 14px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      word-break: break-all;
-      transition: color 0.2s;
-    }
-
-    .sns-link:hover { color: #1a1a1a; }
-
-    /* ── PRIVATE ── */
-    .private-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .private-grid .flip-card {
-      min-height: 180px;
-    }
-
-    @media (min-width: 561px) {
-      .private-grid {
-        grid-auto-rows: 1fr;
-      }
-      .flip-card-inner {
-        height: 100%;
-      }
-      .flip-card-front {
-        height: 100%;
-        box-sizing: border-box;
-      }
-      .flip-card-back {
-        height: 100%;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .private-grid { grid-template-columns: 1fr; }
-    }
-
-    .private-card {
+    .card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px 22px;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
     }
 
-    .private-card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .private-card-icon { font-size: 1.2rem; }
-
-    .private-card-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      letter-spacing: 0.3em;
+    .label {
+      margin: 0 0 10px;
       color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-    }
-
-    .private-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .private-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      font-size: 0.83rem;
-      color: #444;
-      line-height: 1.6;
-    }
-
-    .private-list li::before {
-      content: '';
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--line);
-      flex-shrink: 0;
-      margin-top: 6px;
-    }
-
-    .private-list li strong { color: #1a1a1a; font-weight: 700; }
-
-    .private-card.values {
-      grid-column: 1 / -1;
-      background: #fff;
-      border-color: #d8d8d4;
-      display: flex;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .value-item {
-      flex: 1;
-      text-align: center;
-      padding: 8px 12px;
-    }
-
-    .value-item + .value-item {
-      border-left: 1px solid var(--border);
-    }
-
-    .value-item-emoji { font-size: 1.6rem; margin-bottom: 8px; }
-
-    .value-item-text {
-      font-size: 0.82rem;
-      color: #333;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      line-height: 1.6;
     }
 
-    .value-item-sub {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 4px;
-      letter-spacing: 0.05em;
+    .section-title {
+      margin: 0 0 14px;
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
     }
 
-    /* ── FADE CARD ── */
-    .flip-card {
-      position: relative;
-      min-height: 180px;
+    .mermaid {
+      background: #fafbff;
+      border: 1px solid #e6ebf5;
+      border-radius: 12px;
+      padding: 12px;
+      overflow: auto;
     }
 
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
+    .points {
+      margin: 6px 0 0;
+      padding-left: 20px;
     }
 
-    .flip-card-front,
-    .flip-card-back {
-      border-radius: 8px;
-      overflow: hidden;
-      transition: opacity 0.9s ease;
+    .points li {
+      margin-bottom: 8px;
     }
 
-    .flip-card-front {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 24px 22px;
-      opacity: 1;
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
     }
 
-    .flip-card-back {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      background: #000;
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #dbe2f1;
+      background: #f8faff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: #334155;
     }
 
-    .flip-card-back img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .flip-card-inner.flipped .flip-card-front {
-      opacity: 0;
-    }
-
-    .flip-card-inner.flipped .flip-card-back {
-      opacity: 1;
-    }
-
-    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 48px 24px;
-      border-top: 1px solid var(--border);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
+      margin-top: 24px;
       color: var(--muted);
-      letter-spacing: 0.2em;
+      text-align: center;
+      font-size: 0.82rem;
     }
   </style>
 </head>
 <body>
+  <main class="container">
+    <section class="hero">
+      <p class="hero-kicker">SELF INTRODUCTION</p>
+      <h1 class="hero-title">自己紹介を図解でまとめました</h1>
+      <p class="hero-sub">1996年生まれ / 埼玉県さいたま市出身 / ものづくりとスポーツを軸に歩んできたキャリア</p>
+    </section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="hero-category">生き方コンサルタント</p>
-    <p class="hero-roman">Zaitsu &nbsp; Naomi</p>
-    <p class="hero-person">財津 直美</p>
-    <p class="hero-brand-sub">生きるを、愛する。</p>
-  </section>
-
-  <!-- TIMELINE -->
-  <section class="section">
-    <p class="section-label">Timeline</p>
-
-    <!-- 原点 -->
-    <p class="tl-phase-label">🌱</p>
-    <div class="tl-grid single">
-      <div class="tl-card">
-        <span class="tl-card-icon">🌿</span>
-        <p class="tl-card-age">1977年4月23日</p>
-        <p class="tl-card-title">誕生</p>
-        <p class="tl-card-text">大分県日田市出身。お米・野菜・果物・卵・鶏肉など、ほぼ自給自足の自然豊かな環境で育つ。</p>
-      </div>
-    </div>
-
-    <!-- 多様な経験を積む -->
-    <p class="tl-phase-label">✖️4</p>
-    <div class="tl-grid">
-      <div class="tl-card">
-        <span class="tl-card-icon">🏫</span>
-        <p class="tl-card-age">23歳</p>
-        <p class="tl-card-title">学習塾</p>
-        <p class="tl-card-text">小学校教員を目指し教員免許を取得。自分の理想の教育を追い求め、起業の道へ。</p>
-      </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">👘</span>
-        <p class="tl-card-age">30歳</p>
-        <p class="tl-card-title">着付け講師</p>
-        <p class="tl-card-text">亡き義母から譲り受けた着物をきっかけに着付け講師を開始。</p>
-      </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">🏪</span>
-        <p class="tl-card-age">37歳</p>
-        <p class="tl-card-title">コンビニ</p>
-        <p class="tl-card-text">早朝からコンビニスタッフとして勤務。幅広い現場経験を積む。</p>
-      </div>
-      <div class="tl-card">
-        <span class="tl-card-icon">📢</span>
-        <p class="tl-card-age">37歳</p>
-        <p class="tl-card-title">広告代理店営業</p>
-        <p class="tl-card-text">広告代理店の営業として活動。合計4つの仕事を同時に経験するフォーワーカーへ。</p>
-      </div>
-    </div>
-
-    <!-- 転機 -->
-    <p class="tl-phase-label">💫</p>
-    <div class="tl-grid single">
-      <div class="tl-card">
-        <span class="tl-card-icon">🔄</span>
-        <p class="tl-card-age">38歳</p>
-        <p class="tl-card-title">生命保険会社へ</p>
-        <p class="tl-card-text">入院をきっかけに転職。生命保険の世界へ飛び込み、初年度MVP入賞・MDRT入会を達成。ロサンゼルスの世界大会でスピーチ。</p>
-      </div>
-    </div>
-    <div class="tl-grid single">
-      <div class="tl-card">
-        <span class="tl-card-icon">🗾</span>
-        <p class="tl-card-age">42歳</p>
-        <p class="tl-card-title">47都道府県 講演会達成</p>
-        <p class="tl-card-text">「世界一幸せな仕事人になる」をテーマに全国講演会を達成。1年7ヶ月で620名が参加。</p>
-        <span class="tl-card-badge">47都道府県 &nbsp;·&nbsp; 620名</span>
-      </div>
-    </div>
-
-    <!-- 起業 -->
-    <p class="tl-phase-label">🚀</p>
-    <div class="tl-grid single">
-      <div class="tl-card">
-        <span class="tl-card-icon">🏢</span>
-        <p class="tl-card-age">2022年9月30日</p>
-        <p class="tl-card-title">株式会社 SkyLand 設立</p>
-        <p class="tl-card-text">「生きるを、愛する。」をテーマに、2022年9月30日 株式会社 SkyLand を設立。</p>
-      </div>
-    </div>
-
-    <!-- 現在 -->
-    <p class="tl-phase-label">🌸</p>
-    <div class="tl-grid single">
-      <div class="tl-card">
-        <span class="tl-card-icon">🤝</span>
-        <p class="tl-card-age">現在</p>
-        <p class="tl-card-title">生き方コンサルタント</p>
-        <p class="tl-card-text">関わる人ひとりひとりに愛をもって寄り添い、「世界一幸せ」と感じられる生き方をサポートしています。</p>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- NOW -->
-  <section class="section">
-    <p class="section-label">Now</p>
-    <div class="now-card">
-      <h3>生き方コンサルタント<br>株式会社 SkyLand 代表</h3>
-      <p>愛をもって愛を込めて関わる人全てに、生命と生き方と向き合う時間を提供します。</p>
-      <p>生き方コンサルタントとしてお一人お一人の生き方を「世界一幸せ」と感じられるものになるように、寄り添いサポートいたします。</p>
-    </div>
-  </section>
-
-  <!-- PRIVATE -->
-  <section class="section">
-    <p class="section-label">Private</p>
-    <div class="private-grid">
-
-      <!-- 大切にしている価値観（全幅） -->
-      <div class="private-card values">
-        <div class="value-item">
-          <div class="value-item-emoji">🤍</div>
-          <div class="value-item-text">自分を愛する</div>
-          <div class="value-item-sub">Love myself</div>
+    <div class="grid">
+      <section class="card">
+        <p class="label">Timeline</p>
+        <h2 class="section-title">1) 人生年表（時系列）</h2>
+        <div class="mermaid">
+flowchart LR
+    A["1996/9/3<br/>埼玉県さいたま市生まれ<br/>長男として誕生"] --> B["幼少期<br/>ものづくり好き<br/>広告・段ボールでロボット作り<br/>広告を丸めてチャンバラごっこ"]
+    B --> C["小学校（野田小）<br/>水泳：年長〜小6<br/>体操教室・公文<br/>祖母宅でゴールデンレトリバー<br/>初キャンプ（バンガロー）"]
+    C --> D["中学校（美園中）<br/>ソフトテニス部<br/>男子バスケ部がなく断念<br/>スラムダンクに影響<br/>修学旅行：京都・奈良<br/>草津へ年末年始スキー"]
+    D --> E["高校（浦和実業）<br/>念願のバスケ部へ<br/>1年：共学クラス / 体育祭総合優勝<br/>理系進学で男子クラス<br/>2年：ハワイ短期留学（2週間）"]
+    E --> F["高校時代の思い出<br/>自炊生活<br/>パイナップル早剥き対決<br/>最後の1泊2日ホノルル滞在<br/>高3から焼肉きんぐでバイト"]
+    F --> G["ホンダテクニカルカレッジ関東（4年）<br/>先輩の勧めで進学<br/>1級自動車整備士資格を取得<br/>4年次が最も勉強した時期<br/>途中でバイトを抑え勉強に専念"]
+    G --> H["専門時代のトピック<br/>アメリカホンダ工場見学でカリフォルニア1週間<br/>Nikeスニーカー収集開始（現在約30足）<br/>好き：Air Max 95 / Nike Shox<br/>服を着こなすため筋トレ開始"]
+    H --> I["2019年<br/>Hondaへ就職<br/>筋トレを本格化<br/>ベンチ110kg / デッド180kg<br/>日サロ週1・保湿ケア"]
+    I --> J["2025年<br/>ソニー生命へ転職"]
         </div>
-        <div class="value-item">
-          <div class="value-item-emoji">🌸</div>
-          <div class="value-item-text">生きるを愛する</div>
-          <div class="value-item-sub">Love my life</div>
-        </div>
-      </div>
+      </section>
 
-      <!-- 家族 -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="private-card-header">
-              <span class="private-card-icon">🏡</span>
-              <span class="private-card-title">Family</span>
-            </div>
-            <ul class="private-list">
-              <li><strong>23歳の娘</strong></li>
-              <li><strong>20歳の息子</strong></li>
-              <li><strong>愛猫 9歳</strong></li>
-            </ul>
-          </div>
-          <div class="flip-card-back">
-            <img src="photo-family.jpg" alt="家族の愛猫" />
-          </div>
+      <section class="card">
+        <p class="label">Now</p>
+        <h2 class="section-title">2) 現在のプロフィール（好きなこと）</h2>
+        <div class="mermaid">
+mindmap
+  root((現在の自分))
+    仕事
+      ソニー生命（2025年〜）
+    好きなこと
+      洋服
+        ホリスター（アバクロ姉妹ブランド）
+      筋トレ
+        週4でジム
+      お酒
+        ビール
+      食べ物
+        ピザ（ペパロニ）
+        ハンバーガー
+          シェイクシャック
+          シャックバーガー
+          チーズのせポテト
+      海
+        黄昏に行くのが好き
+        鎌倉・由比ヶ浜
+    ルーツ
+      ものづくり好き
+      スポーツ好き
+      継続力
         </div>
-      </div>
-
-      <!-- 好きなこと -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="private-card-header">
-              <span class="private-card-icon">✨</span>
-              <span class="private-card-title">Love</span>
-            </div>
-            <ul class="private-list">
-              <li>📷 写真を撮ること</li>
-              <li>🗾 国内旅行</li>
-              <li>🛋 インテリアショップ巡り</li>
-              <li>👗 ファッション</li>
-            </ul>
-          </div>
-          <div class="flip-card-back">
-            <img src="photo-love.jpg" alt="好きな旅の風景" />
-          </div>
+        <div class="tag-row">
+          <span class="tag"># 洋服</span>
+          <span class="tag"># 筋トレ週4</span>
+          <span class="tag"># ビール</span>
+          <span class="tag"># ペパロニピザ</span>
+          <span class="tag"># シェイクシャック</span>
+          <span class="tag"># 海と黄昏</span>
         </div>
-      </div>
+      </section>
 
-      <!-- 毎日の習慣 -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="private-card-header">
-              <span class="private-card-icon">🌅</span>
-              <span class="private-card-title">Daily Habits</span>
-            </div>
-            <ul class="private-list">
-              <li>🕔 <strong>5時起き</strong></li>
-              <li>🧹 掃除</li>
-              <li>🚶 ウォーキング</li>
-            </ul>
-          </div>
-          <div class="flip-card-back">
-            <img src="photo-habits.jpg" alt="日常の風景" />
-          </div>
-        </div>
-      </div>
-
-      <!-- やらないこと -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="private-card-header">
-              <span class="private-card-icon">🚫</span>
-              <span class="private-card-title">Won't Do</span>
-            </div>
-            <ul class="private-list">
-              <li>SNS</li>
-              <li>違和感を感じること</li>
-              <li>自分に嘘をつくこと</li>
-            </ul>
-          </div>
-          <div class="flip-card-back">
-            <img src="photo-wontdo.jpg" alt="自分を大切にする時間" />
-          </div>
-        </div>
-      </div>
-
+      <section class="card">
+        <p class="label">Message</p>
+        <h2 class="section-title">3) ひとこと</h2>
+        <ul class="points">
+          <li>「好き」を積み重ねて、行動で人生を切り拓いてきました。</li>
+          <li>これからも、人との出会いと挑戦を大切にして成長していきます。</li>
+        </ul>
+      </section>
     </div>
-  </section>
 
-  <!-- SNS / QR -->
-  <section class="section">
-    <p class="section-label">Connect</p>
-    <div class="sns-grid">
+    <footer>Webでそのまま見える自己紹介図解ページ</footer>
+  </main>
 
-      <a href="https://lin.ee/WToSn6b" target="_blank" rel="noopener" class="sns-card sns-card-link">
-        <div class="sns-icon">💬</div>
-        <p class="sns-name">LINE 公式</p>
-        <div class="qr-wrap">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Flin.ee%2FWToSn6b&size=136x136&margin=4&color=1a1a1a&bgcolor=ffffff"
-            alt="LINE 公式 QRコード"
-          />
-        </div>
-        <span class="sns-link">lin.ee/WToSn6b</span>
-      </a>
-
-      <a href="https://note.com/3_happyfulllife" target="_blank" rel="noopener" class="sns-card sns-card-link">
-        <div class="sns-icon">📝</div>
-        <p class="sns-name">note</p>
-        <div class="qr-wrap">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fnote.com%2F3_happyfulllife&size=136x136&margin=4&color=1a1a1a&bgcolor=ffffff"
-            alt="note QRコード"
-          />
-        </div>
-        <span class="sns-link">note.com/3_happyfulllife</span>
-      </a>
-
-    </div>
-  </section>
-
-  <footer>© SkyLand Inc. All rights reserved.</footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script>
-    const timers = new WeakMap();
-
-    // カードが中央に来たら2.5秒後に写真へフェード
-    const enterObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        const inner = entry.target.querySelector('.flip-card-inner');
-        if (entry.isIntersecting) {
-          const t = setTimeout(function() {
-            inner.classList.add('flipped');
-          }, 2500);
-          timers.set(entry.target, t);
-        } else {
-          clearTimeout(timers.get(entry.target));
-        }
-      });
-    }, {
-      threshold: 0.55,
-      rootMargin: '-10% 0px -10% 0px'
-    });
-
-    // カードがほぼ画面外に出たらテキストに戻す
-    const exitObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) {
-          const inner = entry.target.querySelector('.flip-card-inner');
-          clearTimeout(timers.get(entry.target));
-          inner.classList.remove('flipped');
-        }
-      });
-    }, {
-      threshold: 0.05
-    });
-
-    document.querySelectorAll('.flip-card').forEach(function(card) {
-      enterObserver.observe(card);
-      exitObserver.observe(card);
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+      securityLevel: "loose"
     });
   </script>
-
 </body>
 </html>
