@@ -472,11 +472,10 @@
     /* ── SCROLL REVEAL ── */
     .scroll-card {
       --reveal-y: 28px;
-      --scroll-y: 0px;
       --hover-y: 0px;
       --card-scale: 0.985;
       opacity: 0;
-      transform: translate3d(0, calc(var(--reveal-y) + var(--scroll-y) + var(--hover-y)), 0) scale(var(--card-scale));
+      transform: translate3d(0, calc(var(--reveal-y) + var(--hover-y)), 0) scale(var(--card-scale));
       transition: opacity 620ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform;
     }
@@ -800,45 +799,51 @@
     const mobileQuery = window.matchMedia ? window.matchMedia('(max-width: 768px)') : { matches: false };
     const getMotionConfig = function() {
       return mobileQuery.matches
-        ? { revealTop: 0.94, revealBottom: 0.06, maxShift: 30 }
-        : { revealTop: 0.9, revealBottom: 0.1, maxShift: 20 };
+        ? { revealTop: 0.96, revealBottom: 0.04 }
+        : { revealTop: 0.92, revealBottom: 0.08 };
     };
 
-    // スクロールで常に「浮き上がり」を計算（PC / スマホ共通）
+    // スクロール時にカードを一度だけふわっと表示（PC / スマホ共通）
     let ticking = false;
     let motionConfig = getMotionConfig();
 
-    const updateCardScrollMotion = function() {
+    const updateCardReveal = function() {
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const viewportCenter = viewportHeight * 0.5;
 
       motionCards.forEach(function(card) {
+        if (card.classList.contains('is-visible')) return;
         const rect = card.getBoundingClientRect();
         const isVisible = rect.top < viewportHeight * motionConfig.revealTop && rect.bottom > viewportHeight * motionConfig.revealBottom;
-        card.classList.toggle('is-visible', isVisible);
-
-        const cardCenter = rect.top + rect.height * 0.5;
-        const normalized = Math.max(-1, Math.min(1, (cardCenter - viewportCenter) / viewportCenter));
-        const shift = Math.round(normalized * -motionConfig.maxShift);
-        card.style.setProperty('--scroll-y', shift + 'px');
+        if (isVisible) {
+          card.classList.add('is-visible');
+        }
       });
 
       ticking = false;
+
+      const allRevealed = motionCards.every(function(card) {
+        return card.classList.contains('is-visible');
+      });
+
+      if (allRevealed) {
+        window.removeEventListener('scroll', requestCardReveal);
+        window.removeEventListener('touchmove', requestCardReveal);
+      }
     };
 
-    const requestCardScrollMotion = function() {
+    const requestCardReveal = function() {
       if (ticking) return;
       ticking = true;
-      window.requestAnimationFrame(updateCardScrollMotion);
+      window.requestAnimationFrame(updateCardReveal);
     };
 
-    window.addEventListener('scroll', requestCardScrollMotion, { passive: true });
-    window.addEventListener('touchmove', requestCardScrollMotion, { passive: true });
+    window.addEventListener('scroll', requestCardReveal, { passive: true });
+    window.addEventListener('touchmove', requestCardReveal, { passive: true });
     window.addEventListener('resize', function() {
       motionConfig = getMotionConfig();
-      requestCardScrollMotion();
+      requestCardReveal();
     });
-    requestCardScrollMotion();
+    requestCardReveal();
   </script>
 
 </body>
