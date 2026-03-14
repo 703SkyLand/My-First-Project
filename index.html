@@ -124,11 +124,6 @@
       margin-bottom: 48px;
     }
 
-    /* ── TIMELINE (図解) ── */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     /* ── TIMELINE ── */
     .tl-phase-label {
       font-family: 'Inter', sans-serif;
@@ -169,13 +164,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 24px 22px;
-      opacity: 0;
-      transform: translateY(14px);
-      animation: fadeUp 0.5s ease forwards;
     }
-
-    .tl-card:nth-child(1) { animation-delay: 0.05s; }
-    .tl-card:nth-child(2) { animation-delay: 0.15s; }
 
     .tl-card-icon {
       font-size: 1.5rem;
@@ -480,6 +469,28 @@
       opacity: 1;
     }
 
+    /* ── SCROLL REVEAL ── */
+    .scroll-card {
+      opacity: 0;
+      transform: translate3d(0, 28px, 0) scale(0.985);
+      transition: opacity 620ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .scroll-card.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition-delay: var(--scroll-delay, 0ms);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-card {
+        opacity: 1;
+        transform: none;
+        transition: none !important;
+      }
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -775,6 +786,36 @@
       enterObserver.observe(card);
       exitObserver.observe(card);
     });
+
+    // スクロールでカードをふわっと表示
+    const motionCards = Array.from(document.querySelectorAll('.tl-card, .now-card, .private-card, .sns-card, .flip-card'));
+    motionCards.forEach(function(card, index) {
+      card.classList.add('scroll-card');
+      card.style.setProperty('--scroll-delay', String((index % 6) * 70) + 'ms');
+    });
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      motionCards.forEach(function(card) {
+        revealObserver.observe(card);
+      });
+    } else {
+      motionCards.forEach(function(card) {
+        card.classList.add('is-visible');
+      });
+    }
   </script>
 
 </body>
