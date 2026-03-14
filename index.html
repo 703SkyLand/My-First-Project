@@ -488,6 +488,12 @@
       transition-delay: var(--scroll-delay, 0ms);
     }
 
+    @media (max-width: 768px) {
+      .scroll-card {
+        --reveal-y: 40px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .scroll-card {
         opacity: 1;
@@ -803,7 +809,15 @@
       card.style.setProperty('--scroll-delay', String((index % 6) * 70) + 'ms');
     });
 
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    const getMotionConfig = function() {
+      return mobileQuery.matches
+        ? { threshold: 0.12, rootMargin: '0px 0px -2% 0px', maxShift: 28 }
+        : { threshold: 0.2, rootMargin: '0px 0px -8% 0px', maxShift: 18 };
+    };
+
     if ('IntersectionObserver' in window) {
+      const revealConfig = getMotionConfig();
       const revealObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -813,8 +827,8 @@
           }
         });
       }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -8% 0px'
+        threshold: revealConfig.threshold,
+        rootMargin: revealConfig.rootMargin
       });
 
       motionCards.forEach(function(card) {
@@ -830,6 +844,7 @@
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduceMotion) {
       let ticking = false;
+      let motionConfig = getMotionConfig();
 
       const updateCardScrollMotion = function() {
         const viewportCenter = window.innerHeight * 0.5;
@@ -837,7 +852,7 @@
           const rect = card.getBoundingClientRect();
           const cardCenter = rect.top + rect.height * 0.5;
           const normalized = Math.max(-1, Math.min(1, (cardCenter - viewportCenter) / viewportCenter));
-          const shift = Math.round(normalized * -18);
+          const shift = Math.round(normalized * -motionConfig.maxShift);
           card.style.setProperty('--scroll-y', shift + 'px');
         });
         ticking = false;
@@ -850,7 +865,11 @@
       };
 
       window.addEventListener('scroll', requestCardScrollMotion, { passive: true });
-      window.addEventListener('resize', requestCardScrollMotion);
+      window.addEventListener('touchmove', requestCardScrollMotion, { passive: true });
+      window.addEventListener('resize', function() {
+        motionConfig = getMotionConfig();
+        requestCardScrollMotion();
+      });
       requestCardScrollMotion();
     }
   </script>
