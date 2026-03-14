@@ -258,12 +258,12 @@
       text-decoration: none;
       color: inherit;
       cursor: pointer;
+      --hover-y: 0px;
     }
 
     .sns-card-link:hover {
       border-color: #aaa;
-      transform: translateY(-3px);
-      transition: transform 0.2s;
+      --hover-y: -3px;
     }
 
     .sns-icon { font-size: 1.4rem; margin-bottom: 10px; }
@@ -471,21 +471,30 @@
 
     /* ── SCROLL REVEAL ── */
     .scroll-card {
+      --reveal-y: 28px;
+      --scroll-y: 0px;
+      --hover-y: 0px;
+      --card-scale: 0.985;
       opacity: 0;
-      transform: translate3d(0, 28px, 0) scale(0.985);
+      transform: translate3d(0, calc(var(--reveal-y) + var(--scroll-y) + var(--hover-y)), 0) scale(var(--card-scale));
       transition: opacity 620ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform;
     }
 
     .scroll-card.is-visible {
       opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
+      --reveal-y: 0px;
+      --card-scale: 1;
       transition-delay: var(--scroll-delay, 0ms);
     }
 
     @media (prefers-reduced-motion: reduce) {
       .scroll-card {
         opacity: 1;
+        --reveal-y: 0px;
+        --scroll-y: 0px;
+        --hover-y: 0px;
+        --card-scale: 1;
         transform: none;
         transition: none !important;
       }
@@ -815,6 +824,34 @@
       motionCards.forEach(function(card) {
         card.classList.add('is-visible');
       });
+    }
+
+    // スクロール位置に応じてカードをわずかに追従させる
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      let ticking = false;
+
+      const updateCardScrollMotion = function() {
+        const viewportCenter = window.innerHeight * 0.5;
+        motionCards.forEach(function(card) {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.top + rect.height * 0.5;
+          const normalized = Math.max(-1, Math.min(1, (cardCenter - viewportCenter) / viewportCenter));
+          const shift = Math.round(normalized * -18);
+          card.style.setProperty('--scroll-y', shift + 'px');
+        });
+        ticking = false;
+      };
+
+      const requestCardScrollMotion = function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateCardScrollMotion);
+      };
+
+      window.addEventListener('scroll', requestCardScrollMotion, { passive: true });
+      window.addEventListener('resize', requestCardScrollMotion);
+      requestCardScrollMotion();
     }
   </script>
 
