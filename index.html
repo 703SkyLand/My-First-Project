@@ -397,7 +397,7 @@
     }
 
     .private-grid .flip-card {
-      min-height: 180px;
+      min-height: 190px;
     }
 
     @media (min-width: 561px) {
@@ -407,17 +407,11 @@
       .flip-card-inner {
         height: 100%;
       }
-      .flip-card-front {
-        height: 100%;
-        box-sizing: border-box;
-      }
-      .flip-card-back {
-        height: 100%;
-      }
     }
 
     @media (max-width: 560px) {
       .private-grid { grid-template-columns: 1fr; }
+      .private-grid .flip-card { min-height: 220px; }
     }
 
     .private-card {
@@ -509,37 +503,42 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── FADE CARD ── */
+    /* ── PRIVATE PHOTO PANEL ── */
     .flip-card {
       position: relative;
-      min-height: 180px;
+      min-height: 190px;
     }
 
     .flip-card-inner {
-      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 0fr;
       width: 100%;
       height: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+      transition: grid-template-columns 0.58s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .flip-card-front,
     .flip-card-back {
-      border-radius: 8px;
-      overflow: hidden;
-      transition: opacity 0.9s ease;
+      min-width: 0;
+      min-height: 0;
     }
 
     .flip-card-front {
       background: var(--surface);
-      border: 1px solid var(--border);
       padding: 24px 22px;
-      opacity: 1;
+      box-sizing: border-box;
     }
 
     .flip-card-back {
-      position: absolute;
-      inset: 0;
+      border-left: 1px solid transparent;
       opacity: 0;
+      transform: translateX(16px);
       background: #000;
+      transition: opacity 0.5s ease, transform 0.58s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
     }
 
     .flip-card-back img {
@@ -549,12 +548,38 @@
       display: block;
     }
 
-    .flip-card-inner.flipped .flip-card-front {
-      opacity: 0;
+    .flip-card-inner.flipped {
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
     }
 
     .flip-card-inner.flipped .flip-card-back {
       opacity: 1;
+      transform: translateX(0);
+      border-left-color: var(--border);
+    }
+
+    @media (max-width: 560px) {
+      .flip-card-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) 0fr;
+        transition: grid-template-rows 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .flip-card-back {
+        border-left: 0;
+        border-top: 1px solid transparent;
+        transform: translateY(12px);
+      }
+
+      .flip-card-inner.flipped {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) 140px;
+      }
+
+      .flip-card-inner.flipped .flip-card-back {
+        transform: translateY(0);
+        border-top-color: var(--border);
+      }
     }
 
     /* ── SCROLL REVEAL ── */
@@ -869,7 +894,7 @@
   <script>
     const timers = new WeakMap();
 
-    // カードが中央に来たら2.5秒後に写真へフェード
+    // カードが中央に来たら2.5秒後に写真パネルを表示
     const enterObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         const inner = entry.target.querySelector('.flip-card-inner');
