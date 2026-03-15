@@ -519,9 +519,10 @@
     .flip-card-back {
       border-left: 1px solid transparent;
       opacity: 0;
-      transform: translateX(16px);
+      clip-path: inset(0 0 0 100%);
+      transform: translateX(10%);
       background: #f3f3f1;
-      transition: opacity 0.5s ease, transform 0.58s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
+      transition: border-color 0.25s ease;
     }
 
     .flip-card-back img {
@@ -537,8 +538,23 @@
 
     .flip-card-inner.flipped .flip-card-back {
       opacity: 1;
-      transform: translateX(0);
       border-left-color: var(--border);
+      animation: tectonicSlideFromRight 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes tectonicSlideFromRight {
+      0% {
+        clip-path: inset(0 0 0 100%);
+        transform: translateX(10%);
+      }
+      58% {
+        clip-path: inset(0 0 0 30%);
+        transform: translateX(2%);
+      }
+      100% {
+        clip-path: inset(0 0 0 0);
+        transform: translateX(0);
+      }
     }
 
     @media (max-width: 560px) {
@@ -551,7 +567,7 @@
       .flip-card-back {
         border-left: 0;
         border-top: 1px solid transparent;
-        transform: translateY(12px);
+        transform: translateX(10%);
       }
 
       .flip-card-inner.flipped {
@@ -560,7 +576,6 @@
       }
 
       .flip-card-inner.flipped .flip-card-back {
-        transform: translateY(0);
         border-top-color: var(--border);
       }
     }
