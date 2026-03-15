@@ -890,6 +890,17 @@
 
   <script>
     const timers = new WeakMap();
+    const initialUrl = new URL(window.location.href);
+
+    // 送信後リンク (?sent=1#contact) で開いた場合は先頭表示に戻す
+    if (initialUrl.searchParams.get('sent') === '1') {
+      initialUrl.searchParams.delete('sent');
+      initialUrl.hash = '';
+      const query = initialUrl.searchParams.toString();
+      const cleanedUrl = initialUrl.pathname + (query ? '?' + query : '');
+      window.history.replaceState({}, '', cleanedUrl);
+      window.scrollTo(0, 0);
+    }
 
     // カードが中央に来たら2.5秒後に写真パネルを表示
     const enterObserver = new IntersectionObserver(function(entries) {
