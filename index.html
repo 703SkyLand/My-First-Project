@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkyLand — Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Noto+Sans+JP:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script>
+    (function() {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('sent') !== '1') return;
+
+      url.searchParams.delete('sent');
+      url.hash = '';
+      const query = url.searchParams.toString();
+      const cleanedUrl = url.pathname + (query ? '?' + query : '');
+
+      // アンカー復元より先に先頭へ戻し、URLも正規化する
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.history.replaceState({}, '', cleanedUrl);
+
+      const forceTop = function() {
+        window.scrollTo(0, 0);
+      };
+
+      forceTop();
+      window.addEventListener('load', forceTop, { once: true });
+      setTimeout(forceTop, 0);
+      setTimeout(forceTop, 120);
+      window.addEventListener('load', function() {
+        document.documentElement.style.scrollBehavior = '';
+      }, { once: true });
+    })();
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -890,17 +917,6 @@
 
   <script>
     const timers = new WeakMap();
-    const initialUrl = new URL(window.location.href);
-
-    // 送信後リンク (?sent=1#contact) で開いた場合は先頭表示に戻す
-    if (initialUrl.searchParams.get('sent') === '1') {
-      initialUrl.searchParams.delete('sent');
-      initialUrl.hash = '';
-      const query = initialUrl.searchParams.toString();
-      const cleanedUrl = initialUrl.pathname + (query ? '?' + query : '');
-      window.history.replaceState({}, '', cleanedUrl);
-      window.scrollTo(0, 0);
-    }
 
     // カードが中央に来たら2.5秒後に写真パネルを表示
     const enterObserver = new IntersectionObserver(function(entries) {
