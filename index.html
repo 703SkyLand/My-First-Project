@@ -566,7 +566,7 @@
     .flip-card-inner.flipped .flip-card-back {
       opacity: 1;
       border-left-color: var(--border);
-      animation: tectonicSlideFromRight 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation: tectonicSlideFromRight 0.88s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
     @keyframes tectonicSlideFromRight {
@@ -918,14 +918,14 @@
   <script>
     const timers = new WeakMap();
 
-    // カードが中央に来たら2.5秒後に写真パネルを表示
+    // カードが中央に来たら1.9秒後に写真パネルを表示
     const enterObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         const inner = entry.target.querySelector('.flip-card-inner');
         if (entry.isIntersecting) {
           const t = setTimeout(function() {
             inner.classList.add('flipped');
-          }, 2500);
+          }, 1900);
           timers.set(entry.target, t);
         } else {
           clearTimeout(timers.get(entry.target));
