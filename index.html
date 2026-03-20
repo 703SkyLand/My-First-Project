@@ -546,10 +546,10 @@
     .flip-card-back {
       border-left: 1px solid transparent;
       opacity: 0;
-      clip-path: inset(0 0 0 100%);
-      transform: translateX(10%);
+      filter: blur(10px);
+      transform: translateY(12px) scale(0.985);
       background: #f3f3f1;
-      transition: border-color 0.25s ease;
+      transition: opacity 0.65s ease, transform 0.72s cubic-bezier(0.22, 1, 0.36, 1), filter 0.72s ease, border-color 0.25s ease;
     }
 
     .flip-card-back img {
@@ -565,23 +565,9 @@
 
     .flip-card-inner.flipped .flip-card-back {
       opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
       border-left-color: var(--border);
-      animation: tectonicSlideFromRight 0.88s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    @keyframes tectonicSlideFromRight {
-      0% {
-        clip-path: inset(0 0 0 100%);
-        transform: translateX(10%);
-      }
-      58% {
-        clip-path: inset(0 0 0 30%);
-        transform: translateX(2%);
-      }
-      100% {
-        clip-path: inset(0 0 0 0);
-        transform: translateX(0);
-      }
     }
 
     @media (max-width: 560px) {
@@ -594,7 +580,7 @@
       .flip-card-back {
         border-left: 0;
         border-top: 1px solid transparent;
-        transform: translateX(10%);
+        transform: translateY(10px) scale(0.99);
       }
 
       .flip-card-inner.flipped {
@@ -918,22 +904,22 @@
   <script>
     const timers = new WeakMap();
 
-    // カードが中央に来たら1.9秒後に写真パネルを表示
+    // カードが中央に来る頃には写真が見えるよう、少し早めに表示する
     const enterObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         const inner = entry.target.querySelector('.flip-card-inner');
         if (entry.isIntersecting) {
           const t = setTimeout(function() {
             inner.classList.add('flipped');
-          }, 1900);
+          }, 380);
           timers.set(entry.target, t);
         } else {
           clearTimeout(timers.get(entry.target));
         }
       });
     }, {
-      threshold: 0.55,
-      rootMargin: '-10% 0px -10% 0px'
+      threshold: 0.3,
+      rootMargin: '0px 0px -20% 0px'
     });
 
     // カードがほぼ画面外に出たらテキストに戻す
