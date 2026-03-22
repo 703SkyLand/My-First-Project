@@ -627,6 +627,29 @@
       color: var(--muted);
       letter-spacing: 0.2em;
     }
+
+    .footer-nav {
+      margin-bottom: 18px;
+    }
+
+    .footer-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #555;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      background: #fff;
+      transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: #1a1a1a;
+      border-color: #b8b8b0;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -899,7 +922,12 @@
     </div>
   </section>
 
-  <footer>© SkyLand Inc. All rights reserved.</footer>
+  <footer>
+    <div class="footer-nav">
+      <a class="footer-link" href="receipt-checklist-2026-03.html">2026年3月 領収書チェックリスト</a>
+    </div>
+    © SkyLand Inc. All rights reserved.
+  </footer>
 
   <script>
     const timers = new WeakMap();

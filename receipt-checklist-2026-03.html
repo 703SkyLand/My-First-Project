@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026年3月 領収書チェックリスト</title>
+  <style>
+    :root {
+      --bg: #fff8fb;
+      --paper: #ffffff;
+      --ink: #3b3440;
+      --muted: #7e7487;
+      --line: #f0ddea;
+      --accent: #ff73ae;
+      --accent-soft: #ffe3f0;
+      --mint: #d9f8ef;
+      --lavender: #efe8ff;
+      --shadow: 0 12px 30px rgba(100, 58, 93, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, #ffeef6 0%, rgba(255, 238, 246, 0) 40%),
+        radial-gradient(circle at 85% 8%, #f1e8ff 0%, rgba(241, 232, 255, 0) 35%),
+        var(--bg);
+      line-height: 1.45;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 24px auto 32px;
+      padding: 0 16px;
+    }
+
+    .sheet {
+      background: var(--paper);
+      border: 1px solid #f3eaf1;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .head {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #fff0f7, #fffdfd 52%, #f2eeff);
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+      letter-spacing: 0.02em;
+    }
+
+    .tag {
+      font-size: 0.76rem;
+      color: #5f5767;
+      background: #ffffffcf;
+      border: 1px solid #ead8e5;
+      border-radius: 999px;
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .meta {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .progress-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #ead8e7;
+      background: #fff;
+      font-size: 0.8rem;
+      color: #65596f;
+    }
+
+    .bar {
+      width: 120px;
+      height: 8px;
+      border-radius: 999px;
+      background: #f4edf5;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff8fbe, #c490ff);
+      transition: width 0.25s ease;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid #e6d7e3;
+      background: #fff;
+      color: #5c5364;
+      padding: 7px 12px;
+      font-size: 0.74rem;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      border-color: #d7bfd0;
+      transform: translateY(-1px);
+    }
+
+    .btn.primary {
+      background: var(--accent-soft);
+      border-color: #f4cde0;
+      color: #814868;
+    }
+
+    .body {
+      padding: 16px 20px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      break-inside: avoid;
+      background: #fff;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .card.schedule h2::before {
+      content: "📆";
+    }
+
+    .card.month-end h2::before {
+      content: "🌙";
+    }
+
+    .card.conditional h2::before {
+      content: "🔖";
+    }
+
+    .card.anytime h2::before {
+      content: "🧾";
+    }
+
+    .card.memo h2::before {
+      content: "🩺";
+    }
+
+    .card.rules h2::before {
+      content: "✨";
+    }
+
+    .card.rules {
+      background: linear-gradient(140deg, #fff, #fffcfe);
+    }
+
+    .card.memo {
+      background: linear-gradient(140deg, #ffffff, #f8fffd);
+      border-color: #dcf3ec;
+    }
+
+    .card.anytime {
+      background: linear-gradient(140deg, #ffffff, #fff8fd);
+    }
+
+    ul.checklist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 9px;
+      padding: 5px 6px;
+      min-height: 34px;
+    }
+
+    .row:hover {
+      background: #fff8fc;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+
+    label {
+      cursor: pointer;
+      font-size: 0.83rem;
+      color: #4a414f;
+      flex: 1;
+    }
+
+    .hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .pill {
+      font-size: 0.68rem;
+      background: var(--lavender);
+      color: #6e5f88;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #dfd4f7;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .pill.mint {
+      background: var(--mint);
+      border-color: #beefdf;
+      color: #4f7568;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .sign {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #ead9e5;
+      font-size: 0.73rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 860px) {
+      .body {
+        grid-template-columns: 1fr;
+      }
+      .wide {
+        grid-column: auto;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .wrap {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sheet {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .head {
+        padding: 10px 8px 8px;
+        background: #fff;
+      }
+
+      .title-row h1 {
+        font-size: 18px;
+      }
+
+      .sub {
+        margin-top: 4px;
+        font-size: 11px;
+      }
+
+      .tag {
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .progress-box {
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+
+      .bar {
+        width: 90px;
+        height: 6px;
+      }
+
+      .body {
+        padding: 8px;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .card {
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      .card h2 {
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      ul.checklist {
+        gap: 2px;
+      }
+
+      .row {
+        min-height: 24px;
+        padding: 2px 4px;
+      }
+
+      input[type="checkbox"] {
+        width: 12px;
+        height: 12px;
+      }
+
+      label {
+        font-size: 10px;
+      }
+
+      .hint,
+      .pill {
+        font-size: 9px;
+      }
+
+      .sign {
+        margin-top: 6px;
+        padding-top: 6px;
+        font-size: 9px;
+      }
+
+      .card,
+      .row {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="sheet">
+      <header class="head">
+        <div class="title-row">
+          <h1>2026年3月 領収書チェックリスト</h1>
+          <span class="tag">かわいく・迷わず・1ページ</span>
+        </div>
+        <p class="sub">毎月これだけ見ればOK。日付・月末・都度対応を分けて、忘れにくくしました。</p>
+        <div class="meta">
+          <div class="progress-box">
+            <span id="progress-text">0 / 0 完了</span>
+            <span class="bar" aria-hidden="true"><span id="progress-bar"></span></span>
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="print-btn" type="button">印刷する</button>
+            <button class="btn" id="reset-btn" type="button">チェックをリセット</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="body">
+        <article class="card rules">
+          <h2>まず最初に（共通ルール）</h2>
+          <ul class="checklist">
+            <li class="row"><input id="r-1" type="checkbox" /><label for="r-1">勤怠はLINE領収書のところに一緒に入れる</label></li>
+            <li class="row"><input id="r-2" type="checkbox" /><label for="r-2">勤怠は空欄でOK</label></li>
+            <li class="row"><input id="r-3" type="checkbox" /><label for="r-3">立替交通費は前月分を対象にする</label></li>
+          </ul>
+          <p class="hint">最初にこの3つを確認しておくと、後の記載ミスが減ります。</p>
+        </article>
+
+        <article class="card schedule">
+          <h2>日付でチェック</h2>
+          <ul class="checklist">
+            <li class="row"><input id="d-1" type="checkbox" /><label for="d-1">1日：公式LINE</label></li>
+            <li class="row"><input id="d-2" type="checkbox" /><label for="d-2">10日：直美さんへのお支払い</label></li>
+            <li class="row"><input id="d-3" type="checkbox" /><label for="d-3">10日：インターネット（WiMAX）</label></li>
+            <li class="row"><input id="d-4" type="checkbox" /><label for="d-4">10日：携帯（ソニーネット）</label></li>
+            <li class="row"><input id="d-5" type="checkbox" /><label for="d-5">20日：Zoom</label></li>
+            <li class="row"><input id="d-6" type="checkbox" /><label for="d-6">26日：ChatGPT</label></li>
+          </ul>
+        </article>
+
+        <article class="card month-end">
+          <h2>月末にチェック</h2>
+          <ul class="checklist">
+            <li class="row"><input id="m-1" type="checkbox" /><label for="m-1">東京ガス・電気</label></li>
+            <li class="row"><input id="m-2" type="checkbox" /><label for="m-2">レンタカー</label></li>
+          </ul>
+        </article>
+
+        <article class="card conditional">
+          <h2>条件付き</h2>
+          <ul class="checklist">
+            <li class="row">
+              <input id="c-1" type="checkbox" />
+              <label for="c-1">東京 水道<span class="pill">奇数月のみ</span></label>
+            </li>
+            <li class="row">
+              <input id="c-2" type="checkbox" />
+              <label for="c-2">CANVA<span class="pill">年払い月のみ</span></label>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card anytime wide">
+          <h2>その都度チェック</h2>
+          <ul class="checklist">
+            <li class="row"><input id="a-1" type="checkbox" /><label for="a-1">カーソル</label></li>
+            <li class="row"><input id="a-2" type="checkbox" /><label for="a-2">ホテル代</label></li>
+            <li class="row"><input id="a-3" type="checkbox" /><label for="a-3">カフェ代（スタバ）</label></li>
+            <li class="row"><input id="a-4" type="checkbox" /><label for="a-4">書籍・新聞代</label></li>
+            <li class="row"><input id="a-5" type="checkbox" /><label for="a-5">SUICA</label></li>
+            <li class="row"><input id="a-6" type="checkbox" /><label for="a-6">出張旅費精算</label></li>
+            <li class="row"><input id="a-7" type="checkbox" /><label for="a-7">YouTube</label></li>
+          </ul>
+        </article>
+
+        <article class="card memo wide">
+          <h2>控除メモ（記載漏れ防止）</h2>
+          <ul class="checklist">
+            <li class="row"><input id="k-1" type="checkbox" /><label for="k-1">健康保険 29,497円は会社支払い</label></li>
+            <li class="row"><input id="k-2" type="checkbox" /><label for="k-2">控除額として 14,748円（半額）を掲載 <span class="pill mint">控除欄</span></label></li>
+          </ul>
+          <div class="sign">
+            <span>確認者：________________</span>
+            <span>確認日：____ / ____</span>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    (function() {
+      const STORAGE_KEY = "receipt-checklist-2026-03";
+      const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      const progressText = document.getElementById("progress-text");
+      const progressBar = document.getElementById("progress-bar");
+      const resetBtn = document.getElementById("reset-btn");
+      const printBtn = document.getElementById("print-btn");
+
+      const loadState = function() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          checks.forEach(function(input) {
+            input.checked = Boolean(data[input.id]);
+          });
+        } catch (err) {
+          console.warn("チェック状態の読み込みに失敗しました。", err);
+        }
+      };
+
+      const saveState = function() {
+        const data = {};
+        checks.forEach(function(input) {
+          data[input.id] = input.checked;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      };
+
+      const updateProgress = function() {
+        const total = checks.length;
+        const done = checks.filter(function(input) {
+          return input.checked;
+        }).length;
+        const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+        progressText.textContent = done + " / " + total + " 完了";
+        progressBar.style.width = percent + "%";
+      };
+
+      checks.forEach(function(input) {
+        input.addEventListener("change", function() {
+          saveState();
+          updateProgress();
+        });
+      });
+
+      resetBtn.addEventListener("click", function() {
+        checks.forEach(function(input) {
+          input.checked = false;
+        });
+        saveState();
+        updateProgress();
+      });
+
+      printBtn.addEventListener("click", function() {
+        window.print();
+      });
+
+      loadState();
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
